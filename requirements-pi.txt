@@ -1,0 +1,6 @@
+ncnn
+fastapi
+uvicorn[standard]
+websockets
+pyserial
+requests
