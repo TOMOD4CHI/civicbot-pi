@@ -11,3 +11,5 @@ models/*
 .env
 gps_track.db
 .pytest_cache/
+.venv-dev/
+backups/

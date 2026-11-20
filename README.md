@@ -39,6 +39,8 @@ A robot car that finds potholes and puts them on a map.
 
 ## Quick start
 
+> **Full step-by-step guide (Linux server, Pi, phone, troubleshooting): [docs/SETUP.md](docs/SETUP.md).**
+
 ### 1. Server (Linux PC)
 ```bash
 bash server/scripts/setup_server.sh          # venv + asks for the Nominatim contact e-mail
