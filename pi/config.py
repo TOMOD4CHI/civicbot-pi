@@ -23,12 +23,12 @@
 # --- Moteur gauche (sortie OUT1/OUT2 du L298N) ---
 LEFT_IN1 = 17
 LEFT_IN2 = 27
-LEFT_EN = 18          # None si cavalier ENA en place
+LEFT_EN = None          # None si cavalier ENA en place
 
 # --- Moteur droit (sortie OUT3/OUT4 du L298N) ---
 RIGHT_IN3 = 22
 RIGHT_IN4 = 23
-RIGHT_EN = 13         # None si cavalier ENB en place
+RIGHT_EN = None        # None si cavalier ENB en place
 
 # Inverser le sens d'un moteur si la roue tourne à l'envers
 # (évite de devoir dessouder / inverser les fils)
