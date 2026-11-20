@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Pothole Pi · Map</title>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.css">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.Default.css">
+  <link rel="stylesheet" href="/css/app.css">
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand"><span class="logo">⬤</span>Pothole Pi</div>
+    <nav class="nav">
+      <a href="/" class="active">Map</a>
+      <a href="/dashboard">Dashboard</a>
+      <a href="/docs" target="_blank" rel="noopener">API</a>
+    </nav>
+    <div class="spacer"></div>
+    <div class="live"><span id="car-dot" class="dot"></span><span id="car-label" class="label-text">Car offline</span></div>
+  </header>
+
+  <div class="map-layout">
+    <aside class="sidebar">
+      <section class="panel">
+        <h3>Period</h3>
+        <div class="seg" id="period">
+          <button data-days="1">24 h</button>
+          <button data-days="7">7 d</button>
+          <button data-days="30" class="active">30 d</button>
+          <button data-days="0">All</button>
+        </div>
+      </section>
+
+      <section class="panel">
+        <h3>Filters</h3>
+        <label class="check"><input type="checkbox" id="f-car" checked> Car GPS</label>
+        <label class="check"><input type="checkbox" id="f-phone" checked> Phone GPS</label>
+        <label class="check"><input type="checkbox" id="f-fixed"> Show fixed potholes</label>
+      </section>
+
+      <section class="panel">
+        <h3>Layers</h3>
+        <label class="check"><input type="checkbox" id="l-zones" checked> Critical zones</label>
+        <label class="check"><input type="checkbox" id="l-car" checked> Live car position</label>
+      </section>
+
+      <section class="panel">
+        <h3>In view</h3>
+        <div class="mini-stats">
+          <div><b id="s-shown">0</b><span>potholes</span></div>
+          <div><b id="s-critical">0</b><span>critical zones</span></div>
+        </div>
+      </section>
+
+      <section class="panel">
+        <h3>Critical zones</h3>
+        <div class="zone-list" id="zones"><div class="empty">No zone yet.</div></div>
+      </section>
+
+      <section class="panel">
+        <h3>Legend</h3>
+        <div class="legend-row"><span class="swatch" style="background:var(--critical)"></span>New pothole</div>
+        <div class="legend-row"><span class="swatch" style="background:var(--warning)"></span>Confirmed</div>
+        <div class="legend-row"><span class="swatch" style="background:var(--ok)"></span>Fixed</div>
+        <div class="legend-row"><span class="swatch" style="background:transparent;border:3px solid var(--critical)"></span><span id="legend-critical">Critical zone</span></div>
+        <div class="legend-row"><span class="swatch" style="background:transparent;border:3px solid var(--warning)"></span><span id="legend-warning">Warning zone</span></div>
+      </section>
+    </aside>
+    <main id="map"></main>
+  </div>
+
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  <script src="https://unpkg.com/leaflet.markercluster@1.5.3/dist/leaflet.markercluster.js"></script>
+  <script src="/js/api.js"></script>
+  <script src="/js/map.js"></script>
+</body>
+</html>

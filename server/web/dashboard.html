@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Pothole Pi · Dashboard</title>
+  <link rel="stylesheet" href="/css/app.css">
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand"><span class="logo">⬤</span>Pothole Pi</div>
+    <nav class="nav">
+      <a href="/">Map</a>
+      <a href="/dashboard" class="active">Dashboard</a>
+      <a href="/docs" target="_blank" rel="noopener">API</a>
+    </nav>
+    <div class="spacer"></div>
+    <div class="live"><span id="car-dot" class="dot"></span><span id="car-label" class="label-text">Car offline</span></div>
+  </header>
+
+  <div class="page">
+    <div class="page-head">
+      <div>
+        <h1>Road condition overview</h1>
+        <p id="updated">Loading…</p>
+      </div>
+    </div>
+
+    <section class="kpis" id="kpis"></section>
+
+    <section class="grid">
+      <div class="card span-8">
+        <h2>Detections per day <small>last 30 days</small></h2>
+        <div class="chart-box"><canvas id="c-days"></canvas></div>
+      </div>
+      <div class="card span-4">
+        <h2>Repair status</h2>
+        <div class="chart-box"><canvas id="c-status"></canvas></div>
+      </div>
+    </section>
+
+    <section class="grid">
+      <div class="card span-6">
+        <h2>Most affected roads</h2>
+        <div class="chart-box small"><canvas id="c-roads"></canvas></div>
+      </div>
+      <div class="card span-6">
+        <h2>Time of day <small>when potholes are reported</small></h2>
+        <div class="chart-box small"><canvas id="c-hours"></canvas></div>
+      </div>
+    </section>
+
+    <section class="grid">
+      <div class="card span-8">
+        <h2>Critical zones <small id="zones-rule"></small></h2>
+        <div class="table-wrap"><table class="data" id="t-zones"></table></div>
+      </div>
+      <div class="card span-4">
+        <h2>Location source</h2>
+        <div class="chart-box small"><canvas id="c-source"></canvas></div>
+      </div>
+    </section>
+
+    <section class="grid">
+      <div class="card span-12">
+        <h2>Latest detections</h2>
+        <div class="table-wrap"><table class="data" id="t-recent"></table></div>
+      </div>
+    </section>
+  </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+  <script src="/js/api.js"></script>
+  <script src="/js/dashboard.js"></script>
+</body>
+</html>
