@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Robot car — GPS</title>
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<style>
+  html, body { margin: 0; height: 100%; font-family: system-ui, sans-serif; }
+  #map { position: absolute; inset: 0; }
+  #panel {
+    position: absolute; top: 12px; right: 12px; z-index: 1000; width: 300px;
+    background: #fff; border-radius: 10px; padding: 14px 16px;
+    box-shadow: 0 2px 12px rgba(0,0,0,.2); font-size: 14px; line-height: 1.5;
+  }
+  #panel h1 { font-size: 16px; margin: 0 0 8px; }
+  .status { font-weight: 600; }
+  .ok { color: #1a7f37; } .wait { color: #b26a00; } .off { color: #c62828; }
+  .addr { margin-top: 8px; padding-top: 8px; border-top: 1px solid #eee; }
+  .muted { color: #777; font-size: 12px; }
+  label { display: block; margin-top: 8px; font-size: 13px; }
+</style>
+</head>
+<body>
+<div id="map"></div>
+<div id="panel">
+  <h1>🚗 Robot car — position</h1>
+  <div class="status off" id="status">En attente de données…</div>
+  <div id="coords">—</div>
+  <div id="extra" class="muted"></div>
+  <div class="addr"><b>Adresse :</b><br><span id="addr">—</span></div>
+  <label><input type="checkbox" id="follow" checked> Suivre la voiture</label>
+  <div class="muted" style="margin-top:8px">Adresses : © OpenStreetMap / Nominatim, Photon</div>
+</div>
+<script>
+const map = L.map('map').setView([37.2744, 9.8739], 15);
+L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+  maxZoom: 19, attribution: '&copy; OpenStreetMap contributors'
+}).addTo(map);
+const marker = L.marker([0, 0]);
+const path = L.polyline([], { weight: 4 }).addTo(map);
+let first = true;
+
+async function refresh() {
+  const st = document.getElementById('status');
+  try {
+    const p = await (await fetch('/api/latest')).json();
+    if (!p.received) { st.textContent = 'En attente de données…'; st.className = 'status off'; return; }
+    if (p.age_s > 10) {
+      st.textContent = `Pi silencieux depuis ${Math.round(p.age_s)} s`; st.className = 'status off';
+    } else if (!p.fix) {
+      st.textContent = `Recherche satellites… (${p.sats || 0} vus)`; st.className = 'status wait';
+    } else {
+      st.textContent = 'Fix GPS OK' + (p.simulated ? ' (simulé)' : ''); st.className = 'status ok';
+    }
+    if (p.fix && p.lat != null) {
+      const ll = [p.lat, p.lon];
+      marker.setLatLng(ll).addTo(map);
+      document.getElementById('coords').textContent = `${p.lat.toFixed(6)}, ${p.lon.toFixed(6)}`;
+      document.getElementById('extra').textContent =
+        `${p.sats} sats · HDOP ${p.hdop ?? '—'} · ${p.speed_kmh ?? 0} km/h · alt ${p.alt ?? '—'} m`;
+      if (document.getElementById('follow').checked || first) { map.setView(ll, first ? 17 : map.getZoom()); first = false; }
+    }
+    document.getElementById('addr').textContent = p.address || (p.fix ? 'Recherche de l’adresse…' : '—');
+  } catch (e) {
+    st.textContent = 'Serveur injoignable'; st.className = 'status off';
+  }
+}
+async function refreshTrack() {
+  try { path.setLatLngs(await (await fetch('/api/track')).json()); } catch (e) {}
+}
+refresh(); refreshTrack();
+setInterval(refresh, 2000);
+setInterval(refreshTrack, 5000);
+</script>
+</body>
+</html>

@@ -8,3 +8,4 @@ data/
 *_ncnn_model/
 models/
 .env
+gps_track.db
