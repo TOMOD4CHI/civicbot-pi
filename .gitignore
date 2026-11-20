@@ -6,6 +6,8 @@ data/
 *.pt
 *.onnx
 *_ncnn_model/
-models/
+models/*
+!models/.gitkeep
 .env
 gps_track.db
+.pytest_cache/
