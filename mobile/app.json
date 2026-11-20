@@ -1,0 +1,44 @@
+{
+  "expo": {
+    "name": "Pothole Pi",
+    "slug": "pothole-pi",
+    "version": "1.0.0",
+    "scheme": "potholepi",
+    "orientation": "default",
+    "icon": "./assets/icon.png",
+    "userInterfaceStyle": "dark",
+    "backgroundColor": "#0d1016",
+    "ios": {
+      "supportsTablet": true,
+      "bundleIdentifier": "com.potholepi.app",
+      "infoPlist": {
+        "NSAppTransportSecurity": { "NSAllowsLocalNetworking": true }
+      }
+    },
+    "android": {
+      "package": "com.potholepi.app",
+      "adaptiveIcon": {
+        "backgroundColor": "#0d1016",
+        "foregroundImage": "./assets/android-icon-foreground.png",
+        "backgroundImage": "./assets/android-icon-background.png",
+        "monochromeImage": "./assets/android-icon-monochrome.png"
+      },
+      "permissions": ["ACCESS_COARSE_LOCATION", "ACCESS_FINE_LOCATION"],
+      "predictiveBackGestureEnabled": false
+    },
+    "web": {
+      "favicon": "./assets/favicon.png"
+    },
+    "plugins": [
+      "expo-router",
+      [
+        "expo-location",
+        { "locationWhenInUsePermission": "Pothole Pi uses your location as a fallback when the car's GPS has no fix." }
+      ],
+      [
+        "expo-build-properties",
+        { "android": { "usesCleartextTraffic": true } }
+      ]
+    ]
+  }
+}
