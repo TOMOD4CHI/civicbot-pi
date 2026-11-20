@@ -33,8 +33,8 @@ class Car:
         if mag < 0.01:
             motor.stop()
             return
-        # remap 0..1 -> MIN_DUTY..1 pour que le moteur démarre vraiment
-        mag = config.MIN_DUTY + (1 - config.MIN_DUTY) * mag
+        # remap 0..1 -> MIN_DUTY..MAX_DUTY : démarrage franc + tension plafonnée
+        mag = config.MIN_DUTY + (config.MAX_DUTY - config.MIN_DUTY) * mag
         if value > 0:
             motor.forward(mag)
         else:

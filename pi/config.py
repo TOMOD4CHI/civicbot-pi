@@ -44,6 +44,10 @@ RIGHT_TRIM = 1.0
 # démarrent pas et "grognent". 0 pour désactiver.
 MIN_DUTY = 0.25
 
+# Vitesse maximale : les moteurs TT sont prévus pour 3-6 V. Avec ~12 V
+# sur le L298N (qui chute ~2 V), 0.6 donne environ 5-6 V aux moteurs.
+MAX_DUTY = 0.6
+
 # Réseau (serveur sur le Pi)
 HOST = "0.0.0.0"
 PORT = 5005
